@@ -2,7 +2,13 @@ import gradio as gr
 import random
 import time
 
+conversations = ["Morning", "Evening"]
 
+chat = [["Hi!", "Hey"]]
+
+def change_chat(new_chat_name):
+      chat = [[new_chat_name, "good"]]
+      return chat
 
 def respond(message, chat_history):
         bot_message = random.choice(["How are you?", "I love you", "I'm very hungry"])
@@ -11,11 +17,12 @@ def respond(message, chat_history):
         return "", chat_history
 
 with gr.Blocks() as demo:
-    chatbot = gr.Chatbot()
+    chat_selection = gr.Dropdown(choices= conversations)
+    chatbot = gr.Chatbot(value=chat)
     msg = gr.Textbox()
     clear = gr.Button("Clear")
 
     msg.submit(respond, [msg, chatbot], [msg, chatbot])
-    clear.click(lambda: None, None, chatbot, queue=False)
+    chat_selection.change(fn = change_chat, inputs = chat_selection, outputs=chatbot)
 
 demo.launch()
