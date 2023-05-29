@@ -1,21 +1,25 @@
 import gradio as gr
-import random
-import time
+import webapp_functions
+import openai
 
+chat = [["This is you!", "This is the assistant!"]]
+conversations = webapp_functions.list_md_files()
 
+with gr.Blocks(theme=gr.themes.Soft()) as demo:
+    with gr.Row():
+        with gr.Accordion(label= "Settings", open= False):
+            with gr.Row():
+                with gr.Column(scale = 1):
+                    modelSelection = gr.Dropdown(label="Model", choices= ["GPT 3.5 Turbo", "GPT 4"])
+                with gr.Column(scale = 1):
+                    apiKey = gr.Textbox(label="OpenAI API Key")
+        with gr.Accordion(label= "Analytics", open= False):
+            analytics = gr.Gallery()
+    chat_selection = gr.Dropdown(choices= conversations, allow_custom_value=True, label="Chat Selection")
+    chatbot = gr.Chatbot(value=chat)
+    msg = gr.Textbox(label="Prompt") 
 
-def respond(message, chat_history):
-        bot_message = random.choice(["How are you?", "I love you", "I'm very hungry"])
-        chat_history.append((message, bot_message))
-        time.sleep(1)
-        return "", chat_history
+    msg.submit(webapp_functions.respond, [msg, chatbot,chat_selection, modelSelection, apiKey], [msg, chatbot])
+    chat_selection.change(fn = webapp_functions.change_chat, inputs = chat_selection, outputs=chatbot)
 
-with gr.Blocks() as demo:
-    chatbot = gr.Chatbot()
-    msg = gr.Textbox()
-    clear = gr.Button("Clear")
-
-    msg.submit(respond, [msg, chatbot], [msg, chatbot])
-    clear.click(lambda: None, None, chatbot, queue=False)
-
-demo.launch()
+demo.launch(server_name="0.0.0.0")
