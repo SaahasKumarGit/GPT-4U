@@ -1,3 +1,4 @@
+# Welcome
 Hi! GPT - 4U is a modern and security-focused interface for Large Language Models. I've included a host of features that I hope you enjoy. Feel free to use it, share it, modify it, and use it however you want (legally of course 😘). No need to attribute me or even ask for my permission. It's completely free! 
 
 Features:
