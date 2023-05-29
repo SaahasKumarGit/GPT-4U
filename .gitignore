@@ -2,3 +2,6 @@
 Dockerfile
 *.txt
 .dockerignore
+PrivateAPIKey.py
+.DS_Store
+__pycache__/
