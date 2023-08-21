@@ -1,7 +1,5 @@
 .env
-Dockerfile
 *.chat
-.dockerignore
 PrivateAPIKey.py
 .DS_Store
 __pycache__/
