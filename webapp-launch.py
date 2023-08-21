@@ -3,13 +3,11 @@ import webapp_functions
 import openai
 
 
-chat = [["This is you!", "This is the assistant!"]]
-
 with gr.Blocks(theme=gr.themes.Soft()) as demo:
     with gr.Row():
         with gr.Tab(label="Chat"):
-            chat_selection = gr.Dropdown(choices= webapp_functions.list_md_files(), allow_custom_value=True, label="Chat Selection")
-            chatbot = gr.Chatbot(value=chat)
+            chat_selection = gr.Dropdown(choices= webapp_functions.list_md_files(),value = "Main Chat" , allow_custom_value=True, label="Chat Selection")
+            chatbot = gr.Chatbot(value=webapp_functions.change_chat("Main Chat"))
             msg = gr.Textbox(label="Prompt")  
         with gr.Tab(label= "Settings"):
             modelSelection = gr.Dropdown(label="Model", choices= ["GPT 3.5 Turbo - 16k", "GPT 4"])
