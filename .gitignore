@@ -1,7 +1,12 @@
 .env
 Dockerfile
-*.txt
+*.chat
 .dockerignore
 PrivateAPIKey.py
 .DS_Store
 __pycache__/
+settings.json
+functions2.py
+*.json
+web2.py
+.gitignore
