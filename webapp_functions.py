@@ -16,7 +16,6 @@ def list_md_files():
     for i in range (len(conversations)):
         conversations[i] = conversations[i][:-5]
 
-    print(conversations)
     return conversations
 
 # Returns a list containing question-answer pairs of the chat 
@@ -31,13 +30,22 @@ def change_chat(new_chat_name):
     try:    
         new_chat_name += ".chat"
         file = open(new_chat_name, 'r+')
-        lines = file.readlines()
-    
-        # Group lines into question-answer pairs, required for the chatbot
-        chat = [(lines[i], lines[i+1]) for i in range(0, len(lines), 2)]
-        return chat
+        file.seek(0)
 
-    # If the file does nto exist, return an empty chat
+        #Turns the .chat file into an array of prompts/responses
+        messages = file.read().split("---endresponse---")
+        
+        #Turns the array into an array of question-answer pairs
+        pair_list = []
+        for i in range(0, len(messages)-1, 2):
+            pair_list.append([messages[i], messages[i+1]])
+        print(pair_list)
+
+        file.close()
+        
+        return pair_list
+    
+    # If the file does not exist, return an empty chat
     except FileNotFoundError as error:
         return []
     
@@ -49,8 +57,9 @@ def respond(message, chat_history, chatName, modelSelection, apiKey, temperature
         # Reads the conversation
         chatName += ".chat"
         file = open(chatName, 'a+')
+        file.seek(0)
         lines = file.read()
-        lines += message
+        lines = lines.replace("---endresponse---", "")
         
         # Sets up the prompt
         openai.api_key = apiKey
@@ -58,7 +67,7 @@ def respond(message, chat_history, chatName, modelSelection, apiKey, temperature
         OpenAPIMessage = [{"role" : "system", "content": lines}]
 
         # Generates the response using the openai api
-        # if the key is invalide, 
+        # if the key is invalid, 
         response = ""
         try:
             if(modelSelection == "GPT 4"): 
@@ -71,8 +80,8 @@ def respond(message, chat_history, chatName, modelSelection, apiKey, temperature
         # Appends the prompt/response to the chat_history to the file
         # and appends it to chat history to be rendered by chatbot
         chat_history.append([message, response])
-        file.write(message + '\n')
-        file.write(response + '\n')
+        file.write(message + "---endresponse---\n")
+        file.write(response + "---endresponse---\n")
         
         file.close()
         return "", chat_history

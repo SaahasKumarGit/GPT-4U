@@ -1,5 +1,5 @@
 .env
-*.chat
+*.md
 PrivateAPIKey.py
 .DS_Store
 __pycache__/
@@ -8,3 +8,5 @@ functions2.py
 *.json
 web2.py
 .gitignore
+!README.md
+*.chat
