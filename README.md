@@ -5,7 +5,7 @@ Hi! GPT - 4U is a modern and security-focused interface for Large Language Model
 ![Screenshot](./images/GPT4U-Screenshot.png)
 
 Features:
-- Most users save anywhere from 50% to 75%. Pay as you use it, no need to pay an exorbitant fixed monthly fee.
+- Pay as you use it, no need to pay an exorbitant fixed monthly fee.
 - All your chat histories are stored in local text files. This means they can easily be moved, stored, or synced with your team via a plethora of cloud storage services. Think of the possibilities for team collaboration!
 - Provides usage statistics.
 
